@@ -1,0 +1,10 @@
+services:
+  db:
+    image: mysql
+    container_name: db-mysql
+    restart: always
+    environment: 
+      MYSQL_ROOT_PASSWORD: recompensa-facil
+      MYSQL_DATABASE: recompensa-facil
+    ports:
+      - "3306:3306"
