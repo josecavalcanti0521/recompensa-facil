@@ -1,0 +1,32 @@
+{
+  "name": "recompensa-facil",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "npx nodemon -e ts --exec \"npx ts-node ./server.ts\"",
+    "start:prod": "node dist/app.js",
+    "build": "npx tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/josecavalcanti0521/recompensa-facil.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/josecavalcanti0521/recompensa-facil/issues"
+  },
+  "homepage": "https://github.com/josecavalcanti0521/recompensa-facil#readme",
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.0.12",
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
