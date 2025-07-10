@@ -19,6 +19,7 @@ model User {
   id      String   @id @default(uuid())
   name    String   @map("nome")
   email   String   @unique
+  password String  
   compras Compra[]
   
   @@map("usuarios") 
