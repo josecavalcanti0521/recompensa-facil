@@ -60,7 +60,7 @@ export class EmpresaController {
       const empresa = await this.empresaService.findByCnpj(cnpj);
 
       if (!empresa) {
-        return res.status(404).json({ error: "Empresa não encontrada pelo ID." });
+        return res.status(404).json({ error: "Empresa não encontrada pelo CNPJ." });
       }
 
       return res.status(200).json(empresa);
