@@ -19,7 +19,6 @@ model User {
   id      String   @id @default(uuid())
   name    String   @map("nome")
   email   String   @unique
-  password String  
   compras Compra[]
   
   @@map("usuarios") 
@@ -28,6 +27,7 @@ model User {
 model Empresa {
   id           String   @id @default(uuid())
   cnpj         String   @unique
+  password String  
   nome_empresa String   @map("nomeEmpresa")
   qtd_minima   Int      @map("qtdMinima")
   compras      Compra[]
