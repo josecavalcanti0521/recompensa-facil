@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { EmpresaServices } from "../services/EmpresaService";
-import bcrypt from 'bcrypt';
+import bcrypt from "bcrypt";
 
 export class EmpresaController {
   private empresaService = new EmpresaServices();
@@ -48,12 +48,35 @@ export class EmpresaController {
       qtd_minima,
       password: passwordHash,
     };
-    
+
     try {
       const { empresa, token } = await this.empresaService.register(data);
-      res.status(201).json({empresa, token});
+      res.status(201).json({ empresa, token });
     } catch (error: any) {
       return res.status(404).json({ message: error.message });
+    }
+  }
+
+  async login(req: Request, res: Response) {
+    const { cnpj, password } = req.body;
+
+    if (!cnpj) {
+      return res
+        .status(400)
+        .json({ message: "CNPJ da empresa é obrigatório." });
+    }
+
+    if (!password) {
+      return res
+        .status(400)
+        .json({ message: "Senha é da empresa é obrigatória." });
+    }
+
+    try {
+      const { token, id } = await this.empresaService.login(cnpj, password);
+      res.status(201).json({ token, id });
+    } catch (error: any) {
+      return res.status(401).json({ message: error.message });
     }
   }
 

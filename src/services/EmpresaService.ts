@@ -1,7 +1,7 @@
-import { Request, Response } from "express";
 import { Empresa, Prisma } from "../../generated/prisma";
 import { EmpresaRepository } from "../repositories/EmpresaRepository";
 import { createTokenEmpresa } from "../helpers/create-token-empresa";
+import bcrypt from 'bcrypt';
 
 export class EmpresaServices {
   private empresaRepository = new EmpresaRepository();
@@ -27,6 +27,24 @@ export class EmpresaServices {
     const token = await createTokenEmpresa(empresa);
 
     return { empresa, token }
+  }
+
+  async login(cnpj: string, password: string): Promise<{ token: string, id: string }> {
+    const empresa = await this.empresaRepository.findByCnpj(cnpj);
+
+    if(!empresa) {
+      throw new Error('CNPJ não encontrado, por favor, use outro CNPJ.');
+    }
+
+    const checkPassword = await bcrypt.compare(password, empresa.password);
+
+    if(!checkPassword) {
+      throw new Error('Senha inválida.');
+    }
+
+    const token = await createTokenEmpresa(empresa)
+
+    return { token, id: empresa.id }
   }
 
   async findAll(): Promise<Empresa[]> {
