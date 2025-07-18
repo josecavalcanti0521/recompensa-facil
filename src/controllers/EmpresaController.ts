@@ -50,8 +50,8 @@ export class EmpresaController {
     };
 
     try {
-      const { empresa, token } = await this.empresaService.register(data);
-      res.status(201).json({ empresa, token });
+      const empresa = await this.empresaService.register(data);
+      res.status(201).json(empresa);
     } catch (error: any) {
       return res.status(404).json({ message: error.message });
     }

@@ -1,4 +1,4 @@
-import { Empresa, Prisma } from "../../generated/prisma";
+import { Compra, Empresa, Prisma } from "../../generated/prisma";
 import { EmpresaRepository } from "../repositories/EmpresaRepository";
 import { createTokenEmpresa } from "../helpers/create-token-empresa";
 import bcrypt from 'bcrypt';
@@ -6,7 +6,7 @@ import bcrypt from 'bcrypt';
 export class EmpresaServices {
   private empresaRepository = new EmpresaRepository();
 
-  async register(data: Prisma.EmpresaCreateInput): Promise<{empresa: Empresa, token: string}> {
+  async register(data: Prisma.EmpresaCreateInput): Promise<Empresa | null> {
     const cnpjExists = await this.empresaRepository.findByCnpj(data.cnpj);
     const nameExists = await this.empresaRepository.findByName(data.nome_empresa);
 
@@ -24,9 +24,7 @@ export class EmpresaServices {
     
     const empresa = await this.empresaRepository.register(data);
 
-    const token = await createTokenEmpresa(empresa);
-
-    return { empresa, token }
+    return empresa;
   }
 
   async login(cnpj: string, password: string): Promise<{ token: string, id: string }> {
