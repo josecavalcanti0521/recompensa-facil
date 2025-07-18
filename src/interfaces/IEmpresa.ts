@@ -1,7 +1,7 @@
-import { Empresa, Prisma } from "@prisma/client";
+import { Empresa, Prisma } from "../../generated/prisma";
 
 export default interface IEmpresa {
-  create(data: Prisma.EmpresaCreateInput): Promise<Empresa>;
+  register(data: Prisma.EmpresaCreateInput): Promise<Empresa>;
   findAll(): Promise<Empresa[]>;
   findById(id: string): Promise<Empresa | null>
   findByCnpj(cnpj: string): Promise<Empresa | null>

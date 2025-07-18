@@ -1,9 +1,9 @@
-import { Prisma, Empresa, PrismaClient } from "@prisma/client";
+import { Prisma, Empresa, PrismaClient } from "../../generated/prisma";
 import prisma from "../config/PrismaService";
 import IEmpresa from "../interfaces/IEmpresa";
 
 export class EmpresaRepository implements IEmpresa {
-  async create(data: Prisma.EmpresaCreateInput): Promise<Empresa> {
+  async register(data: Prisma.EmpresaCreateInput): Promise<Empresa> {
     return await prisma.empresa.create({ data });
   }
 

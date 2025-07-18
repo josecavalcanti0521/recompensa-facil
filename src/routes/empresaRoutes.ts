@@ -5,7 +5,8 @@ const router = Router();
 
 const empresaController = new EmpresaController();
 
-router.post('/', empresaController.create.bind(empresaController));
+router.post('/register', empresaController.register.bind(empresaController));
+router.post('/login', empresaController.login.bind(empresaController));
 router.get('/', empresaController.findAll.bind(empresaController));
 router.get('/id/:id', empresaController.findById.bind(empresaController));
 router.get('/cnpj/:cnpj', empresaController.findByCnpj.bind(empresaController));

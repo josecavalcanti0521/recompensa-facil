@@ -1,11 +1,12 @@
-import { Empresa, Prisma } from "@prisma/client";
+import { Request, Response } from "express";
+import { Empresa, Prisma } from "../../generated/prisma";
 import { EmpresaRepository } from "../repositories/EmpresaRepository";
-import IEmpresa from "../interfaces/IEmpresa";
+import { createTokenEmpresa } from "../helpers/create-token-empresa";
 
 export class EmpresaServices {
   private empresaRepository = new EmpresaRepository();
 
-  async create(data: Prisma.EmpresaCreateInput): Promise<Empresa | null> {
+  async register(data: Prisma.EmpresaCreateInput): Promise<{empresa: Empresa, token: string}> {
     const cnpjExists = await this.empresaRepository.findByCnpj(data.cnpj);
     const nameExists = await this.empresaRepository.findByName(data.nome_empresa);
 
@@ -20,8 +21,12 @@ export class EmpresaServices {
     if (nameExists) {
       throw new Error("Empresa já cadastrado.");
     }
+    
+    const empresa = await this.empresaRepository.register(data);
 
-    return this.empresaRepository.create(data);
+    const token = await createTokenEmpresa(empresa);
+
+    return { empresa, token }
   }
 
   async findAll(): Promise<Empresa[]> {
