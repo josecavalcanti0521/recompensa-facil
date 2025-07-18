@@ -1,4 +1,4 @@
-import { Prisma, Empresa, PrismaClient } from "../../generated/prisma";
+import { Prisma, Empresa, PrismaClient, Compra } from "../../generated/prisma";
 import prisma from "../config/PrismaService";
 import IEmpresa from "../interfaces/IEmpresa";
 
@@ -60,5 +60,17 @@ export class EmpresaRepository implements IEmpresa {
         id,
       },
     });
+  }
+
+  async registerCompra(data: {
+    valor: number, userId: string, empresaId?: string
+  }): Promise<Compra>{
+     return await prisma.compra.create({
+      data: {
+        valor_compra: data.valor,
+        user_id: data.userId,
+        empresa_id: data.empresaId
+      }
+    })
   }
 }

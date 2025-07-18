@@ -182,4 +182,22 @@ export class EmpresaController {
       });
     }
   }
+
+  async registerCompra(req: Request, res: Response) {
+  const { valor, userId } = req.body;
+  const { empresaId } = req.params;
+
+  try {
+    const compra = await this.empresaService.registerCompra({
+      valor: Number(valor),
+      userId,
+      empresaId,
+    });
+
+    return res.status(201).json(compra); 
+  } catch (error) {
+    console.error("Erro ao registrar compra:", error);
+    return res.status(500).json({ message: "Erro ao registrar compra." });
+  }
+}
 }
