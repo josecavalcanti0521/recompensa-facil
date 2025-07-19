@@ -92,8 +92,10 @@ export class EmpresaServices {
 
   async registerCompra(data: {
       valor: number, userId: string, empresaId?: string
-    }): Promise<Compra>{
+    }): Promise<Compra | null>{
       const compra = await this.empresaRepository.registerCompra(data);
+
+      if(!compra) return null
 
       return compra;
     }

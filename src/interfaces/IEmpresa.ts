@@ -10,5 +10,5 @@ export default interface IEmpresa {
   delete(id: string): Promise<Empresa | null>;
   registerCompra(data: {
     valor: number, userId: string, empresaId?: string
-  }): Promise<Compra>
+  }): Promise<Compra | null>
 }

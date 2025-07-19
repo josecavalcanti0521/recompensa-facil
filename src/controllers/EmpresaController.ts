@@ -187,12 +187,30 @@ export class EmpresaController {
   const { valor, userId } = req.body;
   const { empresaId } = req.params;
 
+  if(!valor){
+    return res
+          .status(404)
+          .json({ error: "Valor é obrigatório." });
+  }
+
+  if(!userId){
+    return res
+          .status(404)
+          .json({ error: "Id do usuário é obrigatório." });
+  }
+
   try {
     const compra = await this.empresaService.registerCompra({
       valor: Number(valor),
       userId,
       empresaId,
     });
+
+    if(!compra){
+      return res
+          .status(404)
+          .json({ error: "Não foi possível deletar a empresa." });
+    }
 
     return res.status(201).json(compra); 
   } catch (error) {
