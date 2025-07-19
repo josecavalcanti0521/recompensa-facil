@@ -6,9 +6,9 @@ export class UserController {
     private userService = new UserServices();
 
     async create(req: Request, res: Response){
-        const {name, email, password} = req.body;
+        const {name, email } = req.body;
 
-        if(!name || !email || !password){
+        if(!name || !email){
             return res.status(400).json({message: "Todos os campos devem ser preenchidos"});
         
         }
