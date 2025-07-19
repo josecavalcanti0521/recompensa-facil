@@ -185,24 +185,6 @@ export class EmpresaController {
     }
   }
 
-  async registerCompra(req: Request, res: Response) {
-    const { valor, userId } = req.body;
-    const { empresaId } = req.params;
-
-    try {
-      const compra = await this.empresaService.registerCompra({
-        valor: Number(valor),
-        userId,
-        empresaId,
-      });
-
-      return res.status(201).json(compra);
-    } catch (error) {
-      console.error("Erro ao registrar compra:", error);
-      return res.status(500).json({ message: "Erro ao registrar compra." });
-    }
-  }
-
   async registerUser(req: Request, res: Response) {
     const { name, email } = req.body;
 
@@ -228,11 +210,32 @@ export class EmpresaController {
 
       return res
         .status(201)
-        .json({ message: "Usuário criado com sucesso", user });
+        .json({ message: "Usuário criado com sucesso.", user });
     } catch (error: any) {
       return res
         .status(500)
-        .json({ message: "Ocorre um erro na criação de usuário.", error: error.message });
+        .json({
+          message: "Ocorre um erro na criação de usuário.",
+          error: error.message,
+        });
+    }
+  }
+
+  async registerCompra(req: Request, res: Response) {
+    const { valor, userId } = req.body;
+    const { empresaId } = req.params;
+
+    try {
+      const compra = await this.empresaService.registerCompra({
+        valor: Number(valor),
+        userId,
+        empresaId,
+      });
+
+      return res.status(201).json(compra);
+    } catch (error) {
+      console.error("Erro ao registrar compra:", error);
+      return res.status(500).json({ message: "Erro ao registrar compra." });
     }
   }
 }
