@@ -184,38 +184,25 @@ export class EmpresaController {
   }
 
   async registerCompra(req: Request, res: Response) {
-  const { valor, userId } = req.body;
-  const { empresaId } = req.params;
+    const { valor, userId } = req.body;
+    const { empresaId } = req.params;
 
-  if(!valor){
-    return res
-          .status(404)
-          .json({ error: "Valor é obrigatório." });
-  }
 
-  if(!userId){
-    return res
-          .status(404)
-          .json({ error: "Id do usuário é obrigatório." });
-  }
+    try {
+      const compra = await this.empresaService.registerCompra({
+        valor: Number(valor),
+        userId,
+        empresaId,
+      });
 
-  try {
-    const compra = await this.empresaService.registerCompra({
-      valor: Number(valor),
-      userId,
-      empresaId,
-    });
-
-    if(!compra){
-      return res
-          .status(404)
-          .json({ error: "Não foi possível deletar a empresa." });
+      return res.status(201).json(compra);
+    } catch (error) {
+      console.error("Erro ao registrar compra:", error);
+      return res.status(500).json({ message: "Erro ao registrar compra." });
     }
-
-    return res.status(201).json(compra); 
-  } catch (error) {
-    console.error("Erro ao registrar compra:", error);
-    return res.status(500).json({ message: "Erro ao registrar compra." });
   }
-}
+
+  async test(req: Request, res: Response) {
+    return res.status(200).json({ message: 'Rota protegida' });
+  }
 }

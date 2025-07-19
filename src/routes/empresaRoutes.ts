@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { EmpresaController } from "../controllers/EmpresaController";
+import { verifyAuth } from "../middlewares/verify-auth";
 
 const router = Router();
 
@@ -13,5 +14,5 @@ router.get('/id/:id', empresaController.findById.bind(empresaController));
 router.get('/cnpj/:cnpj', empresaController.findByCnpj.bind(empresaController));
 router.patch('/:id', empresaController.update.bind(empresaController));
 router.delete('/:id', empresaController.delete.bind(empresaController));
-
+router.get('/test', verifyAuth, empresaController.test.bind(empresaController));
 export default router;
