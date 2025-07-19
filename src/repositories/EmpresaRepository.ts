@@ -64,7 +64,7 @@ export class EmpresaRepository implements IEmpresa {
 
   async registerCompra(data: {
     valor: number, userId: string, empresaId?: string
-  }): Promise<Compra>{
+  }): Promise<Compra | null>{
      return await prisma.compra.create({
       data: {
         valor_compra: data.valor,

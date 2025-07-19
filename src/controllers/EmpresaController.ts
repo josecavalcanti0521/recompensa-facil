@@ -187,6 +187,17 @@ export class EmpresaController {
     const { valor, userId } = req.body;
     const { empresaId } = req.params;
 
+    if(!valor){
+      return res
+          .status(400)
+          .json({ error: "ID do usuário não fornecido" });
+    }
+
+    if(!userId){
+      return res
+          .status(400)
+          .json({ error: "Não foi possível localizao o id ." });
+    }
 
     try {
       const compra = await this.empresaService.registerCompra({
@@ -194,6 +205,12 @@ export class EmpresaController {
         userId,
         empresaId,
       });
+
+      if(!compra){
+        return res
+          .status(400)
+          .json({ error: "Erro ao registrar a compra!" });
+      }
 
       return res.status(201).json(compra);
     } catch (error) {
