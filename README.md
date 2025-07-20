@@ -11,7 +11,7 @@ Este projeto segue uma arquitetura modular e bem organizada para garantir escala
 * **`prisma/`**: Contém os esquemas do [Prisma](https://www.prisma.io/), utilizados para a **criação e gestão das entidades do banco de dados**.
 * **`docker-compose.yaml`**:  Define os serviços Docker para o ambiente de desenvolvimento, incluindo a criação e configuração do container MySQL que servirá como banco de dados da aplicação.
 * **`src/`**: Diretório principal com o código-fonte da aplicação.
-    * **`app.js`**: O **arquivo de iniciação** da sua aplicação Node.js/Express.
+    * **`app.ts`**: O **arquivo de iniciação** da sua aplicação Node.js/Express.
     * **`config/`**: Responsável pelas **configurações gerais do projeto**, incluindo as configurações do Prisma.
     * **`routes/`**: Define os **endpoints da API** e direciona as requisições para os controladores apropriados.
     * **`controllers/`**: Lida diretamente com as **requisições e respostas HTTP**, orquestrando a lógica da aplicação.
@@ -74,9 +74,10 @@ Aqui estão alguns exemplos de como a API do Recompensa Fácil pode ser utilizad
 
 * `POST /empresa/register` - Registra uma empresa.
 * `POST /empresa/login` - Autentica uma empresa e retorna um token JWT.
+* `POST /empresa/register-user` - Registra um usuário.
 * `POST /empresa/register-compra/:empresaId` - A empresa registra uma compra a determinado usuário.
 
-**Nota:** Todos os endpoints que manipulam dados da empresa ou cliente (exceto o de login) **requerem autenticação** via token JWT.
+**Nota:** Todos os endpoints que manipulam dados da empresa ou cliente (exceto o de register e login) **requerem autenticação** via token JWT.
 
 ---
 
