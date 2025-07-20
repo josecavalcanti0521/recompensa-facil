@@ -8,7 +8,7 @@ export class UserServices{
         const emailExists = await this.userRepository.findByEmail(data.email);
 
         if(emailExists){
-            throw new Error("Email já cadastrado")
+            throw new Error("Email já cadastrado, por favor, utilize outro email.")
         }
 
         return this.userRepository.create(data);

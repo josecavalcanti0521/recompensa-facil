@@ -1,9 +1,11 @@
 import { Request, Response } from "express";
 import { EmpresaServices } from "../services/EmpresaService";
 import bcrypt from "bcrypt";
+import { UserServices } from "../services/UserService";
 
 export class EmpresaController {
   private empresaService = new EmpresaServices();
+  private userService = new UserServices();
 
   async register(req: Request, res: Response) {
     const { cnpj, nome_empresa, qtd_minima, password, confirmPassword } =
@@ -183,6 +185,42 @@ export class EmpresaController {
     }
   }
 
+  async registerUser(req: Request, res: Response) {
+    const { name, email } = req.body;
+
+    if (!name) {
+      return res
+        .status(422)
+        .json({ message: "Nome do usuário é obrigatório." });
+    }
+
+    if (!email) {
+      return res
+        .status(422)
+        .json({ message: "Email do usuário é obrigatório." });
+    }
+
+    const data = {
+      name,
+      email,
+    };
+
+    try {
+      const user = await this.userService.create(data);
+
+      return res
+        .status(201)
+        .json({ message: "Usuário criado com sucesso.", user });
+    } catch (error: any) {
+      return res
+        .status(500)
+        .json({
+          message: "Ocorre um erro na criação de usuário.",
+          error: error.message,
+        });
+    }
+  }
+
   async registerCompra(req: Request, res: Response) {
     const { valor, userId } = req.body;
     const { empresaId } = req.params;
@@ -217,9 +255,5 @@ export class EmpresaController {
       console.error("Erro ao registrar compra:", error);
       return res.status(500).json({ message: "Erro ao registrar compra." });
     }
-  }
-
-  async test(req: Request, res: Response) {
-    return res.status(200).json({ message: 'Rota protegida' });
   }
 }

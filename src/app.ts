@@ -6,6 +6,7 @@ const app = express();
 
 dotenv.config();
 app.use(express.json());
+
 app.use('/empresa', empresasRouter);
 
 export default app;
