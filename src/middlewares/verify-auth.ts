@@ -20,8 +20,7 @@ export async function verifyAuth(
 
   try {
     const decoded = jwt.verify(token, `${process.env.SECRET_KEY}`);
-
-    req.body = decoded;
+    (req as any).decodedToken = decoded;
     next();
   } catch (error) {
     if (error instanceof jwt.JsonWebTokenError) {

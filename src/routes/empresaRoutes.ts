@@ -9,7 +9,7 @@ const empresaController = new EmpresaController();
 router.post('/register', empresaController.register.bind(empresaController));1
 router.post('/login', empresaController.login.bind(empresaController));
 router.post('/register-user', verifyAuth, empresaController.registerUser.bind(empresaController));
-router.post('/register-compra/:empresaId', verifyAuth,empresaController.registerCompra.bind(empresaController));
+router.post('/register-compra/:empresaId', verifyAuth, empresaController.registerCompra.bind(empresaController));
 router.get('/', empresaController.findAll.bind(empresaController));
 
 router.get('/id/:id', empresaController.findById.bind(empresaController));

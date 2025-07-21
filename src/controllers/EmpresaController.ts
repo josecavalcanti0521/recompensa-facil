@@ -224,7 +224,7 @@ export class EmpresaController {
   async registerCompra(req: Request, res: Response) {
     const { valor, userId } = req.body;
     const { empresaId } = req.params;
-
+    
     if(!valor){
       return res
           .status(400)
