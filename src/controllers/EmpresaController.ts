@@ -2,10 +2,12 @@ import { Request, Response } from "express";
 import { EmpresaServices } from "../services/EmpresaService";
 import bcrypt from "bcrypt";
 import { UserServices } from "../services/UserService";
+import { CompraRepository } from "../repositories/CompraRepository";
 
 export class EmpresaController {
   private empresaService = new EmpresaServices();
   private userService = new UserServices();
+  private compraRepository = new CompraRepository();
 
   async register(req: Request, res: Response) {
     const { cnpj, nome_empresa, qtd_minima, password, confirmPassword } =
@@ -238,7 +240,7 @@ export class EmpresaController {
     }
 
     try {
-      const compra = await this.empresaService.registerCompra({
+      const compra = await this.compraRepository.registerCompra({
         valor: Number(valor),
         userId,
         empresaId,
