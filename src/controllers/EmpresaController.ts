@@ -2,12 +2,12 @@ import { Request, Response } from "express";
 import { EmpresaServices } from "../services/EmpresaService";
 import bcrypt from "bcrypt";
 import { UserServices } from "../services/UserService";
-import { CompraRepository } from "../repositories/CompraRepository";
+import { CompraService } from "../services/CompraService";
 
 export class EmpresaController {
   private empresaService = new EmpresaServices();
   private userService = new UserServices();
-  private compraRepository = new CompraRepository();
+  private compraService = new CompraService();
 
   async register(req: Request, res: Response) {
     const { cnpj, nome_empresa, qtd_minima, password, confirmPassword } =
@@ -230,17 +230,17 @@ export class EmpresaController {
     if(!valor){
       return res
           .status(400)
-          .json({ error: "ID do usuário não fornecido" });
+          .json({ error: "Valor da compra é obrigatório." });
     }
 
     if(!userId){
       return res
           .status(400)
-          .json({ error: "Não foi possível localizao o id ." });
+          .json({ error: "ID do usuário é obrigatório." });
     }
 
     try {
-      const compra = await this.compraRepository.registerCompra({
+      const compra = await this.compraService.registerCompra({
         valor: Number(valor),
         userId,
         empresaId,
@@ -249,13 +249,12 @@ export class EmpresaController {
       if(!compra){
         return res
           .status(400)
-          .json({ error: "Erro ao registrar a compra!" });
+          .json({ error: "Erro ao registrar a compra!", });
       }
 
       return res.status(201).json(compra);
-    } catch (error) {
-      console.error("Erro ao registrar compra:", error);
-      return res.status(500).json({ message: "Erro ao registrar compra." });
+    } catch (error: any) {
+      return res.status(500).json({ message: "Erro ao registrar compra.", error: error.message });
     }
   }
 }
