@@ -25,4 +25,18 @@ export class CompraService {
   
         return compra;
       }
+
+    async findAllCompraById(empresaId: string): Promise<Compra[] | null> {
+      const empresaExists = await this.empresaService.findById(empresaId);
+
+      if(!empresaExists) {
+        throw new Error('Empresa não encontrado pelo ID');
+      }
+
+      const compras = this.compraRespository.findAllCompraById(empresaId);
+
+      if(!compras) return null;
+
+      return compras;
+    }
 }

@@ -16,4 +16,12 @@ export class CompraRepository implements ICompra {
       },
     });
   }
+
+  async findAllCompraById(empresaId: string): Promise<Compra[] | null> {
+    return await prisma.compra.findMany({
+      where: {
+        empresa_id: empresaId
+      }
+    });
+  }
 }

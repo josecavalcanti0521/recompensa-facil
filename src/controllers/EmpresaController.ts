@@ -257,4 +257,21 @@ export class EmpresaController {
       return res.status(500).json({ message: "Erro ao registrar compra.", error: error.message });
     }
   }
+
+  async findAllCompraById(req: Request, res: Response) {
+    const { empresaId } = req.params;
+
+    if(!empresaId) {
+      return res.status(422).json({ message: 'Para retornar todas as compras deu uma empresa é necessário o ID.' })
+    }
+
+    try {
+      const compras = await this.compraService.findAllCompraById(empresaId);
+      const nameEmpresa = (req as any).decodedToken.name;
+
+      return res.status(200).json({ empresa: nameEmpresa, compras})
+    } catch(error: any) {
+      return res.status(404).json({ message: 'Erro ao retornar todas a compras de uma empresa pelo ID;', error: error.message })
+    }
+  }
 }
