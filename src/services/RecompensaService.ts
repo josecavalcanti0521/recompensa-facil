@@ -10,8 +10,8 @@ export class RecompensaServices {
         return recompensa
     }
 
-    async findByUserAndEmpresa(userId: string, empresaId: string): Promise<Recompensa | null>{
-        const exists = await this.recompensaRepository.findByUserAndEmpresa(userId, empresaId);
+    async  getRecompensaAnyStatus(userId: string, empresaId: string): Promise<Recompensa | null>{
+        const exists = await this.recompensaRepository.getRecompensaAnyStatus(userId, empresaId);
 
         return exists;
     }
@@ -20,6 +20,12 @@ export class RecompensaServices {
         const alreadyGet = await this.recompensaRepository.updateResgatada(id,resgatada);
 
         return alreadyGet;
+    }
+
+    async getRecompensaPendente(userId: string, empresaId: string): Promise<Recompensa | null>{
+        const exists = await this.recompensaRepository.getRecompensaPendente(userId,empresaId);
+
+        return exists;
     }
 
 
