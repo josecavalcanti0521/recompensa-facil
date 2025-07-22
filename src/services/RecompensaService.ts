@@ -1,7 +1,6 @@
 import { Prisma, Recompensa } from "../../generated/prisma";
 import { RecompensaRepository } from "../repositories/RecompensaRepository";
 
-
 export class RecompensaServices {
     private recompensaRepository = new RecompensaRepository();
 

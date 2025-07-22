@@ -1,4 +1,4 @@
-import { Compra, Empresa, Prisma } from "../../generated/prisma";
+import { Empresa, Prisma } from "../../generated/prisma";
 import { EmpresaRepository } from "../repositories/EmpresaRepository";
 import { createTokenEmpresa } from "../helpers/create-token-empresa";
 import bcrypt from 'bcrypt';

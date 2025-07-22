@@ -1,4 +1,4 @@
-import { Compra, Empresa, Prisma } from "../../generated/prisma";
+import { Empresa, Prisma } from "../../generated/prisma";
 
 export default interface IEmpresa {
   register(data: Prisma.EmpresaCreateInput): Promise<Empresa>;

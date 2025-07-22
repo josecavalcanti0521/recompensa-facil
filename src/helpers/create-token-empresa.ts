@@ -1,4 +1,3 @@
-import { Request, Response } from "express";
 import { Empresa } from "../../generated/prisma";
 import jwt from 'jsonwebtoken';
 
