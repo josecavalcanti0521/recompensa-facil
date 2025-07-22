@@ -8,7 +8,4 @@ export default interface IEmpresa {
   findByName(name: string): Promise<Empresa | null>
   update(id: string, data: Prisma.EmpresaUpdateInput): Promise<Empresa | null>
   delete(id: string): Promise<Empresa | null>;
-  registerCompra(data: {
-    valor: number, userId: string, empresaId?: string
-  }): Promise<Compra | null>
 }

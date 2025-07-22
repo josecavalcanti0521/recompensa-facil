@@ -61,16 +61,4 @@ export class EmpresaRepository implements IEmpresa {
       },
     });
   }
-
-  async registerCompra(data: {
-    valor: number, userId: string, empresaId?: string
-  }): Promise<Compra | null>{
-     return await prisma.compra.create({
-      data: {
-        valor_compra: data.valor,
-        user_id: data.userId,
-        empresa_id: data.empresaId
-      }
-    })
-  }
 }
