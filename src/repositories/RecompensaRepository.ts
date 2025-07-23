@@ -9,7 +9,7 @@ export class RecompensaRepository implements IRecompensa {
     }
 
 
-    async findByUserAndEmpresa(userId: string, empresaId: string): Promise<Recompensa | null> {
+    async  getRecompensaAnyStatus(userId: string, empresaId: string): Promise<Recompensa | null> {
     return await prisma.recompensa.findUnique({
         where: {
         user_id_empresa_id: {
@@ -24,6 +24,16 @@ export class RecompensaRepository implements IRecompensa {
         return await prisma.recompensa.update({
             where: { id: id },
             data: {resgatada}
+        })
+    }
+
+    async getRecompensaPendente(userId: string, empresaId: string): Promise<Recompensa | null>{
+        return await prisma.recompensa.findFirst({
+            where: {
+                user_id: userId,
+                empresa_id: empresaId,
+                resgatada: false
+            }
         })
     }
 }
