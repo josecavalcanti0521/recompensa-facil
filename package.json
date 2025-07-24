@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:dev": "npx nodemon -e ts --exec \"npx ts-node ./server.ts\"",
+    "start:dev": "npx nodemon -e ts --exec \"npx ts-node --files ./server.ts\"",
     "start:prod": "node dist/app.js",
     "build": "npx tsc"
   },
