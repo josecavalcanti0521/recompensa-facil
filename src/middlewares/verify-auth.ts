@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 
 export async function verifyAuth(
   req: Request,
@@ -19,8 +19,10 @@ export async function verifyAuth(
   const token = authHeader.split(" ")[1];
 
   try {
-    const decoded = jwt.verify(token, `${process.env.SECRET_KEY}`);
-    (req as any).decodedToken = decoded;
+    const decoded = jwt.verify(token, `${process.env.SECRET_KEY}`) as JwtPayload;
+    // (req as any).decodedToken = decoded;
+
+    req.user = decoded;
     next();
   } catch (error) {
     if (error instanceof jwt.JsonWebTokenError) {

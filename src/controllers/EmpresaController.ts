@@ -3,6 +3,7 @@ import { EmpresaServices } from "../services/EmpresaService";
 import bcrypt from "bcrypt";
 import { UserServices } from "../services/UserService";
 import { CompraService } from "../services/CompraService";
+import { getEmpresaByToken } from "../helpers/get-empresa-by-token";
 
 export class EmpresaController {
   private empresaService = new EmpresaServices();
@@ -264,12 +265,17 @@ export class EmpresaController {
     if(!empresaId) {
       return res.status(422).json({ message: 'Para retornar todas as compras deu uma empresa é necessário o ID.' })
     }
+    
+    const empresa = getEmpresaByToken(req);
+
+    if(!empresa) {
+      return res.status(401).json({ message: "Empresa não autenticada." });
+    }
 
     try {
       const compras = await this.compraService.findAllCompraById(empresaId);
-      const nameEmpresa = (req as any).decodedToken.name;
 
-      return res.status(200).json({ empresa: nameEmpresa, compras})
+      return res.status(200).json({ empresa: empresa.name, compras})
     } catch(error: any) {
       return res.status(404).json({ message: 'Erro ao retornar todas a compras de uma empresa pelo ID;', error: error.message })
     }
