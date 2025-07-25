@@ -1,8 +1,10 @@
 import { Prisma, Recompensa } from "../../generated/prisma";
 import { RecompensaRepository } from "../repositories/RecompensaRepository";
+import { EmpresaServices } from "./EmpresaService";
 
 export class RecompensaServices {
     private recompensaRepository = new RecompensaRepository();
+    private empresaService = new EmpresaServices()
 
     async register(data: Prisma.RecompensaCreateInput): Promise<Recompensa>{
         const recompensa = await this.recompensaRepository.register(data);
@@ -11,6 +13,12 @@ export class RecompensaServices {
     }
 
     async  getRecompensaAnyStatus(userId: string, empresaId: string): Promise<Recompensa | null>{
+        const empresaid = this.empresaService.findById(empresaId);
+
+        if(!empresaid){
+            return null;
+        }
+
         const exists = await this.recompensaRepository.getRecompensaAnyStatus(userId, empresaId);
 
         return exists;
@@ -23,6 +31,11 @@ export class RecompensaServices {
     }
 
     async getRecompensaPendente(userId: string, empresaId: string): Promise<Recompensa | null>{
+        const empresaid = this.empresaService.findById(empresaId);
+
+        if(!empresaid){
+            return null;
+        }
         const exists = await this.recompensaRepository.getRecompensaPendente(userId,empresaId);
 
         return exists;
