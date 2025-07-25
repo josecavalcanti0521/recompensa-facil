@@ -2,6 +2,7 @@ import { Empresa, Prisma } from "../../generated/prisma";
 import { EmpresaRepository } from "../repositories/EmpresaRepository";
 import { createTokenEmpresa } from "../helpers/create-token-empresa";
 import bcrypt from 'bcrypt';
+import { getEmpresaByToken } from "../helpers/get-empresa-by-token";
 
 export class EmpresaServices {
   private empresaRepository = new EmpresaRepository();
@@ -76,7 +77,7 @@ export class EmpresaServices {
 
   async update(id: string, data: Prisma.EmpresaUpdateInput): Promise<Empresa | null> {
     const empresa = await this.empresaRepository.update(id, data);
-
+    
     if(!empresa) return null;
 
     return empresa;

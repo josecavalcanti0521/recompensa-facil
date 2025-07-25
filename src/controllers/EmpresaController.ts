@@ -144,12 +144,27 @@ export class EmpresaController {
 
   async update(req: Request, res: Response) {
     const { id } = req.params;
+    const { cnpj, nome_empresa, qtd_minima, password, confirmPassword } = req.body;
+
+    const salt = await bcrypt.genSalt(10);
+    const hashPassword = await bcrypt.hash(password, salt);
+
+    const data = {
+      cnpj,
+      nome_empresa,
+      qtd_minima,
+      password: hashPassword,
+    }
+
+    const empresa = getEmpresaByToken(req);
 
     if (!id) return res.status(400).json({ error: "ID não fornecido." });
 
+    if(id !== empresa?.id) return res.status(400).json({ error: "O ID fornecido não está compatível com o ID do Token." });
+
     try {
       const oldData = await this.empresaService.findById(id);
-      const newData = await this.empresaService.update(id, req.body);
+      const newData = await this.empresaService.update(id, data);
 
       if (!newData) {
         return res
