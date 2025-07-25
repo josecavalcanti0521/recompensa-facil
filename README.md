@@ -46,7 +46,7 @@ Para rodar o projeto localmente, siga os passos abaixo:
 4.  **Configure o banco de dados com Prisma:**
     * Execute as migrações para criar as tabelas no seu banco de dados:
         ```bash
-        npx prisma migrate dev --name init
+        npx prisma migrate deploy
         ```
     * (Opcional) Gere o cliente Prisma para TypeScript (se estiver usando TS):
         ```bash
@@ -76,6 +76,9 @@ Aqui estão alguns exemplos de como a API do Recompensa Fácil pode ser utilizad
 * `POST /empresa/login` - Autentica uma empresa e retorna um token JWT.
 * `POST /empresa/register-user` - Registra um usuário.
 * `POST /empresa/register-compra/:empresaId` - A empresa registra uma compra a determinado usuário.
+* `POST /empresa/register-compra/:empresaId` - A empresa registra uma compra a determinado usuário.
+* `PATCH /empresa/update/:id` - Atualiza os dados de uma empresa.
+* `GET /empresa/find-all-compras/:id` - Retorna todas as compras de uma empresa.
 
 **Nota:** Todos os endpoints que manipulam dados da empresa ou cliente (exceto o de register e login) **requerem autenticação** via token JWT.
 
@@ -90,7 +93,7 @@ Para interagir com a API do Recompensa Fácil e testar seus endpoints, recomenda
 1.  **Instale o Postman** (se ainda não tiver).
 2.  **Inicie a aplicação** seguindo os passos na seção "Como Começar".
 3.  **Obtenha um token de autenticação:**
-    * Faça uma requisição `POST` para o endpoint de login (ex: `http://localhost:3000/empresa/register`) com as credenciais apropriadas.
+    * Faça uma requisição `POST` para o endpoint de login (ex: `http://localhost:3000/empresa/login`) com as credenciais apropriadas.
     * O corpo da requisição deve ser `JSON` com suas credenciais de usuário/empresa.
     * Você receberá um token JWT na resposta.
 4.  **Autentique suas requisições:**
@@ -104,8 +107,9 @@ Para interagir com a API do Recompensa Fácil e testar seus endpoints, recomenda
 
 ---
 
-## Contribuição
+## Colaboradores
 
-Gostaria de contribuir com o Recompensa Fácil? Fique à vontade para abrir issues, enviar pull requests ou sugerir melhorias. Toda contribuição é bem-vinda e apreciada!
+Este projeto está sendo desenvolvido por:
 
----
+* **[José Cavalcanti]** ([@josemarcelo0521](https://github.com/josecavalcanti0521))
+* **[João Pedro Rodrigues]** ([@Joxxxua](https://github.com/Joxxxua))
