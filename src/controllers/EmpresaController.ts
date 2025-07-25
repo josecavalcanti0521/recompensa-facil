@@ -4,11 +4,13 @@ import bcrypt from "bcrypt";
 import { UserServices } from "../services/UserService";
 import { CompraService } from "../services/CompraService";
 import { getEmpresaByToken } from "../helpers/get-empresa-by-token";
+import { RecompensaServices } from "../services/RecompensaService";
 
 export class EmpresaController {
   private empresaService = new EmpresaServices();
   private userService = new UserServices();
   private compraService = new CompraService();
+  private recompensaService = new RecompensaServices()
 
   async register(req: Request, res: Response) {
     const { cnpj, nome_empresa, qtd_minima, password, confirmPassword } =
@@ -278,6 +280,26 @@ export class EmpresaController {
       return res.status(200).json({ empresa: empresa.name, compras})
     } catch(error: any) {
       return res.status(404).json({ message: 'Erro ao retornar todas a compras de uma empresa pelo ID;', error: error.message })
+    }
+  }
+
+  async updateResgatada(req: Request, res: Response){
+    const { recompensaId } = req.params;
+
+    if(!recompensaId){
+      return res.status(404).json({message: "Recompensa não encontrada"})
+    }
+
+    try{
+      const recompensaUpdated = await this.recompensaService.updateResgatada(recompensaId,true)
+
+      return res.status(200).json({
+      message: "Recompensa resgatada com sucesso",
+      recompensa: recompensaUpdated,
+    });
+
+    }catch (error: any) {
+       return res.status(500).json({ error: error.message });
     }
   }
 }
